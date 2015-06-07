@@ -4,8 +4,8 @@ class UpdateDomainInfo
   end
 
   def run
-    domain.expires_on = lookup.expires_on
-    domain.status = lookup.status
+    domain.expires_on = expires_on
+    domain.status = status
 
     domain.save
   end
@@ -13,6 +13,18 @@ class UpdateDomainInfo
   private
 
   attr_reader :domain
+
+  def status
+    if lookup.registered?
+      :registered
+    elsif lookup.available?
+      :available
+    end
+  end
+
+  def expires_on
+    lookup.expires_on
+  end
 
   def lookup
     @lookup ||= whois.lookup(domain.name)
