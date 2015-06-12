@@ -2,7 +2,7 @@ class Api::V1::DomainsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :create
 
   def show
-    @domain = Domain.find_by_name(params[:name])
+    @domain = Domain.find_by_name!(params[:name])
   end
 
   def create
