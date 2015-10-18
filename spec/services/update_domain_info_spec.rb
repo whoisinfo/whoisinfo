@@ -7,7 +7,8 @@ describe UpdateDomainInfo do
       lookup = double(
         "Lookup",
         expires_on: expected_expires_on,
-        registered?: true
+        registered?: true,
+        properties: { foo: :bar }
       )
       whois_client = double("WhoisClient", lookup: lookup)
       allow(Whois::Client).to receive(:new).and_return(whois_client)
@@ -18,6 +19,7 @@ describe UpdateDomainInfo do
 
       expect(domain.expires_on).to eq(expected_expires_on)
       expect(domain.registered?).to be
+      expect(domain.properties).to eq("foo" => "bar")
       expect(whois_client).to have_received(:lookup).with(domain.name)
     end
 
@@ -26,7 +28,8 @@ describe UpdateDomainInfo do
         "Lookup",
         expires_on: Date.today - 1.year,
         registered?: false,
-        available?: true
+        available?: true,
+        properties: {}
       )
       whois_client = double("WhoisClient", lookup: lookup)
       allow(Whois::Client).to receive(:new).and_return(whois_client)

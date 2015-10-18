@@ -6,6 +6,7 @@ class UpdateDomainInfo
   def run
     domain.expires_on = expires_on
     domain.status = status
+    domain.properties = properties.to_json
 
     domain.save
   end
@@ -24,6 +25,10 @@ class UpdateDomainInfo
 
   def expires_on
     lookup.expires_on
+  end
+
+  def properties
+    lookup.properties
   end
 
   def lookup
