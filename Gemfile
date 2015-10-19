@@ -26,7 +26,7 @@ gem "sass-rails", "~> 5.0"
 gem "simple_form"
 gem "title"
 gem "uglifier"
-gem "unicorn"
+gem "puma"
 gem "whois"
 
 group :development do
