@@ -1,13 +1,13 @@
 require "rails_helper"
 
-describe UpdateDomainsJob, type: :job do
+describe UpdateDomainJob, type: :job do
   describe "#perform" do
-    it "will run UpdateDomainsJob for domains" do
+    it "will run UpdateDomainJob for domain" do
       domain = create(:domain)
       update = double("UpdateDomainInfo", run: true)
       allow(UpdateDomainInfo).to receive(:new).and_return(update)
 
-      UpdateDomainsJob.new.perform
+      UpdateDomainJob.new.perform(domain)
 
       expect(UpdateDomainInfo).to have_received(:new).with(domain)
       expect(update).to have_received(:run)
