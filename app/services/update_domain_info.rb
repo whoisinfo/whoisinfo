@@ -1,6 +1,7 @@
 class UpdateDomainInfo
-  def initialize(domain)
+  def initialize(domain, whois_details = WhoisDetails.new(domain.name))
     @domain = domain
+    @whois_details = whois_details
   end
 
   def run
@@ -14,7 +15,7 @@ class UpdateDomainInfo
 
   private
 
-  attr_reader :domain
+  attr_reader :domain, :whois_details
 
   def status
     whois_details.status
@@ -26,11 +27,5 @@ class UpdateDomainInfo
 
   def properties
     whois_details.properties
-  end
-
-  def whois_details
-    @whois_details ||= WhoisDetails.new(
-      domain.name
-    )
   end
 end

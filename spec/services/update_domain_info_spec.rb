@@ -2,6 +2,26 @@ require "rails_helper"
 
 describe UpdateDomainInfo do
   describe "run" do
+    context "when whois details are provided" do
+      it "will use provided details to update domain" do
+        expected_expires_on = Date.today + 1.year
+        whois_details = double(
+          "WhoisDetails",
+          valid?: true,
+          expires_on: expected_expires_on,
+          status: :registered,
+          properties: { foo: :bar },
+        )
+        domain = create(:domain)
+
+        UpdateDomainInfo.new(domain, whois_details).run
+
+        expect(domain.expires_on).to eq(expected_expires_on)
+        expect(domain.registered?).to be
+        expect(domain.properties).to eq("foo" => "bar")
+      end
+    end
+
     context "when whois details are valid" do
       it "updates domain information based on whois data" do
         expected_expires_on = Date.today + 1.year
