@@ -1,4 +1,4 @@
-class Api::V1::DomainsController < ApplicationController
+class Api::DomainsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :create
 
   def show
